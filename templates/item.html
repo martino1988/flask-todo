@@ -1,0 +1,16 @@
+{% extends "layouts/layout.html" %}
+
+{% block content %}
+	<form method="POST">
+		{{ form.hidden_tag() }}
+		{{ form.itemname.label(class="form-label") }}
+		{{ form.itemname(class="form-control") }}
+		{{ form.itemcontent.label(class="form-label") }}
+		{{ form.itemcontent(class="u-full-width form-control") }}
+		</br>
+		{{ form.submit(class="btn btn-secondary") }}
+
+
+	</form>
+
+{% endblock %}

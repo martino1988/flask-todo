@@ -1,0 +1,14 @@
+{% extends "layouts/layout.html" %}
+
+{% block content %}
+<div class="container">
+	<form method="POST">
+		{{ form.hidden_tag() }}
+		{{ form.listname.label(class="form-label") }}
+		{{ form.listname(class="form-control") }}
+		{{ form.submit(class="btn btn-secondary") }}
+
+
+	</form>
+	</div>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "layouts/layout.html" %}
+
+{% block content %}
+{% for message in get_flashed_messages() %}
+
+	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+	  {{ message }}
+	</div>
+{% endfor %}
+<h4>{{ Listname }}</h4>
+	<form method="POST">
+		{{ form.hidden_tag() }}
+		{{ form.itemname.label(class="form-label") }}
+		{{ form.itemname(class="form-control") }}
+		{{ form.itemcontent.label(class="form-label") }}
+		{{ form.itemcontent(class="u-full-width form-control") }}
+		</br>
+		{{ form.submit(class="btn btn-secondary") }}
+
+
+	</form>
+
+<div class="row">
+	<div class="u-full-width">
+		<table class="u-full-width">
+			<thead>
+			<tr>
+				<th></th>
+				<th>Title</th>
+				<th>Content</th>
+
+				<th>Edit</th>
+				<th>Delete</th>
+
+			</tr>
+			</thead>
+			<tbody>
+				{% for item in items %}
+				<tr>
+					<td style="min-width:1px;max-width:1px">
+						<a href="{{ url_for('show_check_item', id=item.list_id, item_id=item.id) }}">
+							<img src="/static/img/checkbox.png" height="15", width="15", style="margin-top:10px">
+						</a>
+					</td>
+					
+					{% if item.checked == True %}
+					<td>
+						<s>{{ item.titel }}</s>
+					</td>
+					<td>
+						<s>{{ item.content }}</s>
+					</td>
+					{% elif item.checked == False %}
+					<td>
+						{{ item.titel }}
+					</td>
+					<td>
+						{{ item.content }}
+					</td>
+					{% endif %}
+					
+					<td style="min-width:1px;max-width:20px">
+						<a href="{{ url_for('show_change_item', id=item.list_id, item_id=item.id) }}">
+							<img src="/static/img/edit.png" height="15", width="15", style="margin-top:10px; margin-right:10px">
+						</a>
+					</td>
+					<td style="min-width:1px;max-width:20px">
+						
+						<a href="{{ url_for('show_delete_item', id=item.list_id, item_id=item.id) }}">
+							<img src="/static/img/delete.png" height="15", width="15", style="margin-top:10px; margin-right:10px">
+						</a>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+</div>
+
+
+{% endblock %}
