@@ -1,8 +1,15 @@
 # flask-todo
 
-a simple Todo  App in Python with Flask-Framework and Skeleton-CSS
+A simple and lightweight Todo App in Python with Flask-Framework and Skeleton-CSS.
 
+No databse configuration required, all data ist stored in csv files.
 
+Best Use: Install it on your Raspi and run this todo app on your home network.
+
+Click here to try it out:
+https://flasktodo.pythonanywhere.com/ 
+
+## Installation
 ```
 git -clone https://github.com/martino1988/flask-todo
 
