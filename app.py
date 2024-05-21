@@ -4,6 +4,7 @@ from flask import Flask, render_template, flash, redirect, url_for, request
 import csv
 import models.models as model
 import models.messages_ger as messages
+import models.settings as settings
 import secrets
 import ast
 
@@ -20,8 +21,8 @@ app.config.from_object(__name__ + '.ConfigClass')
 
 filename_for_lists = messages.FILENAME_FOR_LISTS
 filename_for_items = messages.FILENAME_FOR_ITEMS
-list_limit = messages.LIST_LIMIT
-item_limit = messages.ITEM_LIMIT
+list_limit = settings.LIST_LIMIT
+item_limit = settings.ITEM_LIMIT
 
 def check_for_files():
     if (os.path.exists(filename_for_lists) == False):
@@ -151,8 +152,7 @@ def get_item_object(item_id):
 def upadate_item(Item):
     items = []
     with open(filename_for_items, 'r', newline="") as file:
-        items = [line for line in file]
-    print("items ",items)    
+        items = [line for line in file]  
     
     items = [ast.literal_eval(line) for line in items]
         
@@ -162,7 +162,7 @@ def upadate_item(Item):
             line[3] = Item.content
             line[4] = Item.checked
     
-    print("new items ",items) 
+
     
     with open(filename_for_items, 'w+', newline="") as file:
         for line in items:
@@ -175,8 +175,8 @@ def upadate_item(Item):
 @app.route("/settings", methods=['GET', 'POST'])
 def show_settings():
     settings = []
-    settings.append([messages.LABEL_FOR_LISTLIMIT, messages.LIST_LIMIT])
-    settings.append([messages.LABEL_FOR_ITEMLIMIT, messages.ITEM_LIMIT])
+    settings.append([messages.LABEL_FOR_LISTLIMIT, list_limit])
+    settings.append([messages.LABEL_FOR_ITEMLIMIT, item_limit])
 
     return render_template("settings.html", settings=settings)
     
@@ -198,7 +198,7 @@ def show_dashboard():
             _title = form.listname.data
         )
         if not new_list.id:
-            flash(messages.LIST_LIMIT_REACHED + " Limit:" + str(messages.LIST_LIMIT))
+            flash(messages.LIST_LIMIT_REACHED + " Limit:" + str(list_limit))
             return redirect(url_for('show_dashboard'))
         try:
             with open(filename_for_lists, 'a', newline="\n") as file:
